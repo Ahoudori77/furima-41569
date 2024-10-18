@@ -1,0 +1,45 @@
+# Furimaアプリ
+
+## 概要
+Furimaは、ユーザーが商品を出品し、他のユーザーが購入できるオンラインマーケットプレイスです。ユーザーは自身のニーズに合った商品を見つけたり、自分のアイテムを他のユーザーに販売したりすることができます。
+
+## 機能
+- ユーザー登録とログイン
+- 商品の出品
+- 商品の検索とフィルタリング
+- 購入手続き
+- 住所の管理
+
+## テーブル設計
+### users テーブル
+- `nickname`: ユーザーのニックネーム
+- `email`: メールアドレス
+- `password`: パスワード
+- `last_name`: 姓
+- `first_name`: 名
+- `last_name_kana`: 姓のフリガナ
+- `first_name_kana`: 名のフリガナ
+
+### items テーブル
+- `user_id`: 出品者のユーザーID
+- `category_id`: 商品のカテゴリ
+- `item_name`: 商品名
+- `description`: 商品の説明
+- `condition`: 商品の状態
+- `shoppong_free`: 配送料の負担
+- `region_id`: 発送元の地域
+- `delivery_time`: 配送時間
+- `price`: 商品の価格
+
+### purchases テーブル
+- `user_id`: 購入者のユーザーID
+- `item_id`: 購入した商品のID
+
+### addresses テーブル
+- `postal_code`: 郵便番号
+- `prefecture_id`: 都道府県ID
+- `city`: 市区町村
+- `address_line`: 番地
+- `building`: 建物名
+- `phone_number`: 電話番号
+- `user_id`: ユーザーID（関連付け）
