@@ -28,7 +28,7 @@
 | description        | text       | null: false                    |
 | condition_id       | integer    | null: false                    |
 | shopping_free_id   | integer    | null: false                    |
-| region_id          | integer    | null: false                    |
+| prefecture_id      | integer    | null: false                    |
 | delivery_time_id   | integer    | null: false                    |
 | price              | integer    | null: false                    |
 
