@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   validates :nickname, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥々ーa-zA-Z0-9\s]+\z/, message: 'はひらがな、カタカナ、漢字、英数字のみ使用できます' }
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i
-  validates :password, presence: true, format: { with: PASSWORD_REGEX, message: 'は半角英数字混合で入力してください' }
+  validates :password, format: { with: PASSWORD_REGEX, message: 'は半角英数字混合で入力してください' }
   with_options presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龠々ー]+\z/, message: 'は全角（漢字・ひらがな・カタカナ）で入力してください' } do
     validates :last_name
     validates :first_name
