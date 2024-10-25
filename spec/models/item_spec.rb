@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do
+    @user = FactoryBot.create(:user)
     @item = FactoryBot.build(:item, user: @user, category_id: 2, condition_id: 2, shipping_fee_id: 2, prefecture_id: 2, delivery_time_id: 2, price: 300)
   end
   

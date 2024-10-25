@@ -1,4 +1,4 @@
-const updatePriceCalculations = () => {
+document.addEventListener('DOMContentLoaded', function() {
   const priceInput = document.getElementById('item-price');
   const feeDisplay = document.getElementById('fee');
   const profitDisplay = document.getElementById('profit');
@@ -17,9 +17,4 @@ const updatePriceCalculations = () => {
       profitDisplay.textContent = '0';
     }
   });
-
-  priceInput.dispatchEvent(new Event('input'));
-};
-
-window.addEventListener("turbo:load", updatePriceCalculations);
-window.addEventListener("turbo:render", updatePriceCalculations);
+});
