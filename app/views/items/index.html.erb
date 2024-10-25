@@ -121,61 +121,54 @@
   <%# /FURIMAの特徴 %>
 
   <%# 商品一覧 %>
-  <div class='item-contents'>
-    <h2 class='title'>ピックアップカテゴリー</h2>
-    <div class="subtitle" >
-      新規投稿商品
-    </div>
-    <ul class='item-lists'>
+<div class='item-contents'>
+  <h2 class='title'>ピックアップカテゴリー</h2>
+  <div class="subtitle">新規投稿商品</div>
+  <ul class='item-lists'>
     <% if @items.present? %>
       <% @items.each do |item| %>
-      <li class='list'>
-        <%= link_to item_path(item) do %>
-        <div class='item-img-content'>
-          <%= image_tag "item-sample.png", class: "item-img" %>
-          <% if item.sold_out? %>
-          <div class='sold-out'>
-            <span>Sold Out!!</span>
-          </div>
+        <li class='list'>
+          <%= link_to item_path(item) do %>
+            <div class='item-img-content'>
+             <%= image_tag item.image if item.image.attached? %>
+              <%# <% if item.sold_out? %>
+                <%# <div class='sold-out'> %>
+                  <%# <span>Sold Out!!</span> %>
+                <%# </div> %>
+              <%# <% end %>
+            </div>
+            <div class='item-info'>
+              <h3 class='item-name'><%= item.name %></h3>
+              <div class='item-price'>
+                <span><%= item.price %>円<br><%= item.shipping_fee %></span>
+                <div class='star-btn'>
+                  <%= image_tag "star.png", class:"star-icon" %>
+                  <span class='star-count'>0</span>
+                </div>
+              </div>
+            </div>
           <% end %>
-        </div>
-        <div class='item-info'>
-          <h3 class='item-name'>
-            <%= item.name %>
-          </h3>
-          <div class='item-price'>
-            <span><%= item.price %>円<br><%= item.shipping_fee %></span>
-            <div class='star-btn'>
-              <%= image_tag "star.png", class:"star-icon" %>
-              <span class='star-count'>0</span>
+        </li>
+      <% end %>
+    <% else %>
+      <li class='list'>
+        <%= link_to '#' do %>
+          <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
+          <div class='item-info'>
+            <h3 class='item-name'>商品を出品してね！</h3>
+            <div class='item-price'>
+              <span>99999999円<br>(税込み)</span>
+              <div class='star-btn'>
+                <%= image_tag "star.png", class:"star-icon" %>
+                <span class='star-count'>0</span>
+              </div>
             </div>
           </div>
-        </div>
         <% end %>
       </li>
     <% end %>
-  <% else %>
-      <li class='list'>
-        <%= link_to '#' do %>
-        <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
-        <div class='item-info'>
-          <h3 class='item-name'>
-            商品を出品してね！
-          </h3>
-          <div class='item-price'>
-            <span>99999999円<br>(税込み)</span>
-            <div class='star-btn'>
-              <%= image_tag "star.png", class:"star-icon" %>
-              <span class='star-count'>0</span>
-            </div>
-          </div>
-        </div>
-        <% end %>
-      </li>
-      <%# //商品がある場合は表示されないようにしましょう %>
-      <%# //商品がない場合は以下のダミー商品が表示されるようにしましょう %>
-    </ul>
-  </div>
+  </ul>
+</div>
   <%# /商品一覧 %>
 </div>
 <%= link_to new_item_path, class: 'purchase-btn' do %>
