@@ -39,6 +39,19 @@ class ItemsController < ApplicationController
     end
   end
 
+  def destroy
+    @item = Item.find(params[:id])
+    if @item.user_id == current_user.id
+      if @item.destroy
+        redirect_to root_path, notice: '商品を削除しました'
+      else
+        redirect_to item_path(@item), alert: '商品の削除に失敗しました'
+      end
+    else
+      redirect_to root_path, alert: '権限がありません'
+    end
+  end
+
   private
 
   def set_item
