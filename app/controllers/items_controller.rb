@@ -45,8 +45,6 @@ class ItemsController < ApplicationController
     @item = Item.find_by(id: params[:id])
     if @item.nil?
       redirect_to root_path, alert: '指定された商品が見つかりません。'
-    else
-      load_dropdown_data
     end
   end
 
@@ -66,7 +64,4 @@ class ItemsController < ApplicationController
     @delivery_times = DeliveryTime.all
   end
 
-  def redirect_unless_owner
-    redirect_to root_path unless current_user && @item.user_id == current_user.id
-  end
 end
