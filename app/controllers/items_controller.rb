@@ -4,16 +4,16 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all.order('created_at DESC')
   end
-
+  
   def new
     @item = Item.new
     load_dropdown_data
   end
-
+  
   def create
     @item = Item.new(item_params)
     @item.user_id = current_user.id
-
+    
     if @item.save
       redirect_to root_path, notice: '商品が出品されました'
     else
@@ -21,6 +21,10 @@ class ItemsController < ApplicationController
       load_dropdown_data
       render :new, status: :unprocessable_entity
     end
+  end
+  
+  def show
+    @item = Item.find(params[:id])
   end
 
   private
@@ -36,4 +40,5 @@ class ItemsController < ApplicationController
     @prefectures = Prefecture.all
     @delivery_times = DeliveryTime.all
   end
+
 end
