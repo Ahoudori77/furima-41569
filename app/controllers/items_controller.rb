@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
+  before_action :set_item, only: [:edit, :update, :show]
+  before_action :redirect_unless_owner, only: [:edit, :update]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -24,10 +26,31 @@ class ItemsController < ApplicationController
   end
   
   def show
-    @item = Item.find(params[:id])
+  end
+
+  def edit
+    load_dropdown_data
+  end
+
+  def update
+    if @item.update(item_params)
+      redirect_to @item, notice: 'Item was successfully updated.'
+    else
+      load_dropdown_data
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
+
+  def set_item
+    @item = Item.find_by(id: params[:id])
+    redirect_to root_path, alert: '指定された商品が見つかりません。' if @item.nil?
+  end
+
+  def redirect_unless_owner
+    redirect_to root_path unless current_user && @item && @item.user_id == current_user.id
+  end
 
   def item_params
     params.require(:item).permit(:name, :description, :image, :category_id, :condition_id, :shipping_fee_id, :prefecture_id, :delivery_time_id, :price)
@@ -41,4 +64,7 @@ class ItemsController < ApplicationController
     @delivery_times = DeliveryTime.all
   end
 
+  def redirect_unless_owner
+    redirect_to root_path unless current_user && @item.user_id == current_user.id
+  end
 end
