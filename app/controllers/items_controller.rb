@@ -29,14 +29,12 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    load_dropdown_data
   end
 
   def update
     if @item.update(item_params)
       redirect_to @item, notice: 'Item was successfully updated.'
     else
-      load_dropdown_data
       render :edit, status: :unprocessable_entity
     end
   end
@@ -45,7 +43,11 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find_by(id: params[:id])
-    redirect_to root_path, alert: '指定された商品が見つかりません。' if @item.nil?
+    if @item.nil?
+      redirect_to root_path, alert: '指定された商品が見つかりません。'
+    else
+      load_dropdown_data
+    end
   end
 
   def redirect_unless_owner
