@@ -61,7 +61,9 @@ class ItemsController < ApplicationController
   end
 
   def redirect_unless_owner
-    redirect_to root_path unless current_user && @item && @item.user_id == current_user.id
+    if @item.sold_out? || current_user.id != @item.user_id
+      redirect_to root_path, alert: 'アクセスできません。'
+    end
   end
 
   def item_params

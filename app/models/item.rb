@@ -6,6 +6,11 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :delivery_time
   has_one_attached :image
+  has_one :purchase
+
+  def sold_out?
+    purchase.present?
+  end
   
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
