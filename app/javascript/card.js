@@ -10,6 +10,7 @@ const pay = () => {
   const expiryElement = elements.create('cardExpiry');
   const cvcElement = elements.create('cardCvc');
 
+  // カード情報のマウント
   numberElement.mount('#number-form');
   expiryElement.mount('#expiry-form');
   cvcElement.mount('#cvc-form');
@@ -18,8 +19,10 @@ const pay = () => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     payjp.createToken(numberElement).then(function (response) {
+      const errorElement = document.getElementById("card-error-messages");
+      errorElement.innerHTML = "";
       if (response.error) {
-        alert('カード情報に誤りがあります。');
+        errorElement.innerHTML = `<li>${response.error.message}</li>`;
       } else {
         const token = response.id;
         const tokenObj = `<input value=${token} name='token' type="hidden">`;
@@ -32,5 +35,6 @@ const pay = () => {
     });
   });
 };
-window.addEventListener("turbo:load", pay);
+
 document.addEventListener("turbo:load", pay);
+document.addEventListener("turbo:render", pay);

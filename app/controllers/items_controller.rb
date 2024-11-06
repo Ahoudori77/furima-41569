@@ -4,27 +4,26 @@ class ItemsController < ApplicationController
   before_action :redirect_unless_owner, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.all.order('created_at DESC')
+    @items = Item.order('created_at DESC')
   end
-  
+
   def new
     @item = Item.new
     load_dropdown_data
   end
-  
+
   def create
     @item = Item.new(item_params)
     @item.user_id = current_user.id
-    
+
     if @item.save
       redirect_to root_path, notice: '商品が出品されました'
     else
-      puts @item.errors.full_messages
       load_dropdown_data
       render :new, status: :unprocessable_entity
     end
   end
-  
+
   def show
   end
 
@@ -40,14 +39,10 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if @item.user_id == current_user.id
-      if @item.destroy
-        redirect_to root_path, notice: '商品を削除しました'
-      else
-        redirect_to item_path(@item), alert: '商品の削除に失敗しました'
-      end
+    if @item.destroy
+      redirect_to root_path, notice: '商品を削除しました'
     else
-      redirect_to root_path, alert: '権限がありません'
+      redirect_to item_path(@item), alert: '商品の削除に失敗しました'
     end
   end
 
@@ -77,5 +72,4 @@ class ItemsController < ApplicationController
     @prefectures = Prefecture.all
     @delivery_times = DeliveryTime.all
   end
-
 end
