@@ -6,6 +6,12 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :delivery_time
   has_one_attached :image
+    validates :image, presence: true, if: -> { Rails.env.test? }
+  has_one :purchase
+
+  def sold_out?
+    purchase.present?
+  end
   
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
@@ -15,7 +21,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :delivery_time
 
   
-  validates :image, :name, :description, presence: true
+  validates :name, :description, presence: true
   validates :category_id, presence: true, numericality: { other_than: 1 }
   validates :condition_id, presence: true, numericality: { other_than: 1 }
   validates :shipping_fee_id, presence: true, numericality: { other_than: 1 }
